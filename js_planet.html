@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript : planètes</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #e8f8f5; }
+        header { background-color: #16a085; color: white; padding: 15px; text-align: center; font-size: 22px; }
+        .container { display: flex; min-height: 85vh; }
+        nav { width: 220px; background-color: #a3e4d7; padding: 8px; }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+        nav ul li { margin-bottom: 4px; }
+        nav ul li a { display: block; padding: 8px; text-decoration: none; color: #333; background-color: #b2dfdb; font-size: 14px; }
+        nav ul li a:hover { background-color: #80cbc4; }
+        nav ul li a.active { background-color: #0e6655; color: white; }
+        main { flex: 1; padding: 30px; }
+        footer { background-color: #d1f2eb; text-align: center; padding: 8px; font-size: 13px; color: #333; }
+        #planetes { display: flex; align-items: center; margin-top: 20px; }
+        #image-planete { margin-left: 20px; }
+    </style>
+</head>
+<body>
+    <header>Initiation au développement Web</header>
+    
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="bases.html">Les bases du langage HTML</a></li>
+                <li><a href="tableau.html">Les tableaux</a></li>
+                <li><a href="styles_exercices.html">Les styles CSS : exercices</a></li>
+                <li><a href="styles_exercices/basesCSS.html">Les styles CSS : illustration</a></li>
+                <li><a href="js_exercices.html">Javascript : exercices</a></li>
+                <li><a href="js_ampoule.html">Javascript : l'ampoule</a></li>
+                <li><a href="js_planet.html" class="active">Javascript : planètes</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <h2>Javascript events</h2>
+            <p id="indication">Mouse over the sun and the planets and see the different descriptions</p>
+            
+            <div id="planetes">
+                <img src="images/planets.gif" alt="Planètes" usemap="#planetmap" onmouseout="writeDefault()">
+                <img id="image-planete" src="" alt="" width="100" height="100">
+            </div>
+            
+            <map name="planetmap">
+                <area shape="rect" coords="0,0,82,126" alt="Sun" 
+                      onmouseover="writeText('Le Soleil est une étoile')"
+                      onmouseout="writeDefault()"
+                      onclick="afficherPlanete('images/sun.gif')">
+                <area shape="circle" coords="90,58,3" alt="Mercury"
+                      onmouseover="writeText('Mercure est la planète la plus proche du Soleil')"
+                      onmouseout="writeDefault()"
+                      onclick="afficherPlanete('images/merglobe.gif')">
+                <area shape="circle" coords="124,58,8" alt="Venus"
+                      onmouseover="writeText('Vénus est la deuxième planète du système solaire')"
+                      onmouseout="writeDefault()"
+                      onclick="afficherPlanete('images/venglobe.gif')">
+            </map>
+        </main>
+    </div>
+    
+    <footer>Copyright 2023 - 2024 Polytech Lyon 3A Info</footer>
+    
+    <script>
+        function writeDefault() {
+            document.getElementById("indication").textContent = 
+                "Mouse over the sun and the planets and see the different descriptions";
+        }
+        function writeText(texte) {
+            document.getElementById("indication").textContent = texte;
+        }
+        function afficherPlanete(image) {
+            document.getElementById("image-planete").src = image;
+        }
+    </script>
+</body>
+</html>
