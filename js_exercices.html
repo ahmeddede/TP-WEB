@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript : exercices</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #e8f8f5; }
+        header { background-color: #16a085; color: white; padding: 15px; text-align: center; font-size: 22px; }
+        .container { display: flex; min-height: 85vh; }
+        nav { width: 220px; background-color: #a3e4d7; padding: 8px; }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+        nav ul li { margin-bottom: 4px; }
+        nav ul li a { display: block; padding: 8px; text-decoration: none; color: #333; background-color: #b2dfdb; font-size: 14px; }
+        nav ul li a:hover { background-color: #80cbc4; }
+        nav ul li a.active { background-color: #0e6655; color: white; }
+        main { flex: 1; padding: 30px; }
+        footer { background-color: #d1f2eb; text-align: center; padding: 8px; font-size: 13px; color: #333; }
+    </style>
+</head>
+<body>
+    <header>Initiation au développement Web</header>
+    
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="bases.html">Les bases du langage HTML</a></li>
+                <li><a href="tableau.html">Les tableaux</a></li>
+                <li><a href="styles_exercices.html">Les styles CSS : exercices</a></li>
+                <li><a href="styles_exercices/basesCSS.html">Les styles CSS : illustration</a></li>
+                <li><a href="js_exercices.html" class="active">Javascript : exercices</a></li>
+                <li><a href="js_ampoule.html">Javascript : l'ampoule</a></li>
+                <li><a href="js_planet.html">Javascript : planètes</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <h2>Exercices javascript</h2>
+            <hr>
+            
+            <h3>Fibonacci</h3>
+            <p>Calcul de la suite de Fibonacci de rang "n" :</p>
+            <form name="fibonacci">
+                Rentrer le rang à calculer : <input type="text" name="n" size="5" maxlength="5">
+                <input type="button" value="Calculer Fibonacci" onclick="Appeler_Fibonacci()">
+            </form>
+            <div id="resultat_fibonacci">Résultat du calcul de la suite de Fibonacci en attente...</div>
+            
+            <br><hr><br>
+            
+            <h3>Range(stop, [start], [step])</h3>
+            <p>Fonction range(stop, [start], [step]) qui prend trois arguments en paramètre et renvoie le tableau des entiers compris entre start (inclus) et stop (exclu) avec un pas de step.</p>
+            <form name="range">
+                Stop : <input type="text" name="stop" size="5" maxlength="5">
+                [Start] : <input type="text" name="start" size="5" maxlength="5">
+                [Step] : <input type="text" name="step" size="5" maxlength="5">
+                <input type="button" value="Range(stop, [start], [step])" onclick="Appeler_Range()">
+            </form>
+            <div id="resultat_range">Résultat de l'appel de la fonction Range en attente...</div>
+        </main>
+    </div>
+    
+    <footer>Copyright 2023 - 2024 Polytech Lyon 3A Info</footer>
+    
+    <script src="exercices.js"></script>
+</body>
+</html>

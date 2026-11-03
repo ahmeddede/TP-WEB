@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript : l'ampoule</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #e8f8f5; }
+        header { background-color: #16a085; color: white; padding: 15px; text-align: center; font-size: 22px; }
+        .container { display: flex; min-height: 85vh; }
+        nav { width: 220px; background-color: #a3e4d7; padding: 8px; }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+        nav ul li { margin-bottom: 4px; }
+        nav ul li a { display: block; padding: 8px; text-decoration: none; color: #333; background-color: #b2dfdb; font-size: 14px; }
+        nav ul li a:hover { background-color: #80cbc4; }
+        nav ul li a.active { background-color: #0e6655; color: white; }
+        main { flex: 1; padding: 30px; text-align: center; }
+        footer { background-color: #d1f2eb; text-align: center; padding: 8px; font-size: 13px; color: #333; }
+        img { cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <header>Initiation au développement Web</header>
+    
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="bases.html">Les bases du langage HTML</a></li>
+                <li><a href="tableau.html">Les tableaux</a></li>
+                <li><a href="styles_exercices.html">Les styles CSS : exercices</a></li>
+                <li><a href="styles_exercices/basesCSS.html">Les styles CSS : illustration</a></li>
+                <li><a href="js_exercices.html">Javascript : exercices</a></li>
+                <li><a href="js_ampoule.html" class="active">Javascript : l'ampoule</a></li>
+                <li><a href="js_planet.html">Javascript : planètes</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <h2>Allumer ou éteindre l'ampoule</h2>
+            <p>Cliquer sur l'ampoule !</p>
+            <img id="ampoule" src="images/pic_bulboff.gif" alt="Ampoule" onclick="OnOffAmpoule()">
+        </main>
+    </div>
+    
+    <footer>Copyright 2023 - 2024 Polytech Lyon 3A Info</footer>
+    
+    <script src="ampoule.js"></script>
+</body>
+</html>

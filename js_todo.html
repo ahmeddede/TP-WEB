@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript : Todo List</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #e8f8f5; transition: background-color 0.3s, color 0.3s; }
+        header { background-color: #16a085; color: white; padding: 15px; text-align: center; font-size: 22px; }
+        .container { display: flex; min-height: 85vh; }
+        
+        /* Menu */
+        nav { width: 220px; background-color: #a3e4d7; padding: 8px; }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+        nav ul li { margin-bottom: 4px; }
+        nav ul li a { display: block; padding: 8px; text-decoration: none; color: #333; background-color: #b2dfdb; font-size: 14px; }
+        nav ul li a:hover { background-color: #80cbc4; }
+        nav ul li a.active { background-color: #0e6655; color: white; }
+        
+        /* Contenu */
+        main { flex: 1; padding: 30px; display: flex; justify-content: center; }
+        footer { background-color: #d1f2eb; text-align: center; padding: 8px; font-size: 13px; color: #333; }
+        
+        /* Todo List */
+        .todo-container { width: 100%; max-width: 600px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: background-color 0.3s; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        button { cursor: pointer; padding: 8px 12px; border: none; border-radius: 4px; background-color: #16a085; color: white; }
+        button:hover { background-color: #0e6655; }
+        input[type="text"] { width: 65%; padding: 8px; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        ul { list-style-type: none; padding: 0; }
+        li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
+        .task-done { text-decoration: line-through; color: #888; }
+        .stats { margin-top: 20px; font-size: 0.9em; color: #666; }
+
+        /* Thème sombre */
+        .dark { background-color: #1e1e1e; color: #f5f5f5; }
+        .dark .todo-container { background-color: #2d2d2d; }
+        .dark nav { background-color: #2c3e50; }
+        .dark nav ul li a { background-color: #34495e; color: white; }
+        .dark nav ul li a.active { background-color: #1abc9c; }
+        .dark input { background-color: #333; color: white; border: 1px solid #555; }
+        .dark li { border-bottom: 1px solid #444; }
+        .dark .stats { color: #aaa; }
+
+        /* Lecture facilitée */
+        .dyslexie { line-height: 1.8; letter-spacing: 0.05em; word-spacing: 0.12em; }
+        .dyslexie p, .dyslexie li, .dyslexie span { max-width: 70ch; font-size: 1.08rem; }
+    </style>
+</head>
+<body x-data="todoApp()" :class="{ 'dark': darkMode, 'dyslexie': dyslexie }">
+    
+    <header>Initiation au développement Web</header>
+    
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="bases.html">Les bases du langage HTML</a></li>
+                <li><a href="tableau.html">Les tableaux</a></li>
+                <li><a href="styles_exercices.html">Les styles CSS : exercices</a></li>
+                <li><a href="styles_exercices/basesCSS.html">Les styles CSS : illustration</a></li>
+                <li><a href="js_exercices.html">Javascript : exercices</a></li>
+                <li><a href="js_ampoule.html">Javascript : l'ampoule</a></li>
+                <li><a href="js_planet.html">Javascript : planètes</a></li>
+                <li><a href="js_todo.html" class="active">Javascript : Todo List</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <div class="todo-container">
+                <h2>Ma Todo List</h2>
+                <div class="controls">
+                    <button @click="toggleDarkMode()">
+                        <span x-text="darkMode ? '☀️ Mode Clair' : '🌙 Mode Sombre'"></span>
+                    </button>
+                    <button @click="toggleDyslexie()">
+                        <span x-text="dyslexie ? 'Désactiver Lecture Facilitée' : 'Activer Lecture Facilitée'"></span>
+                    </button>
+                </div>
+
+                <div>
+                    <input type="text" x-model="nouvelleTache" @keydown.enter="ajouterTache" placeholder="Nouvelle tâche...">
+                    <button @click="ajouterTache">Ajouter</button>
+                </div>
+
+                <ul>
+                    <template x-for="(tache, index) in taches" :key="index">
+                        <li>
+                            <span x-text="tache.texte" :class="{ 'task-done': tache.faite }" @click="basculerTache(index)" style="cursor: pointer;"></span>
+                            <button @click="supprimerTache(index)" style="background-color: #dc3545;">Supprimer</button>
+                        </li>
+                    </template>
+                </ul>
+
+                <div class="stats">
+                    <p x-text="'Total : ' + taches.length + ' tâches'"></p>
+                    <p x-text="'Terminées : ' + taches.filter(t => t.faite).length"></p>
+                    <p x-text="'Restantes : ' + taches.filter(t => !t.faite).length"></p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>Copyright 2023 - 2024 Polytech Lyon 3A Info</footer>
+
+    <script>
+        function todoApp() {
+            return {
+                darkMode: false,
+                dyslexie: false,
+                nouvelleTache: '',
+                taches: [],
+
+                init() {
+                    this.darkMode = localStorage.getItem('theme') === 'dark';
+                    this.dyslexie = localStorage.getItem('dyslexie') === 'true';
+                    const tachesSauvegardees = localStorage.getItem('taches');
+                    if (tachesSauvegardees) {
+                        this.taches = JSON.parse(tachesSauvegardees);
+                    }
+                    this.$watch('darkMode', value => { localStorage.setItem('theme', value ? 'dark' : 'light'); });
+                    this.$watch('dyslexie', value => { localStorage.setItem('dyslexie', value ? 'true' : 'false'); });
+                    this.$watch('taches', value => { localStorage.setItem('taches', JSON.stringify(value)); });
+                },
+
+                toggleDarkMode() { this.darkMode = !this.darkMode; },
+                toggleDyslexie() { this.dyslexie = !this.dyslexie; },
+                ajouterTache() {
+                    if (this.nouvelleTache.trim() !== '') {
+                        this.taches.push({ texte: this.nouvelleTache, faite: false });
+                        this.nouvelleTache = '';
+                    }
+                },
+                supprimerTache(index) { this.taches.splice(index, 1); },
+                basculerTache(index) { this.taches[index].faite = !this.taches[index].faite; }
+            }
+        }
+    </script>
+</body>
+</html>
